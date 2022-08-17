@@ -124,7 +124,11 @@ function hash(str: string): string
     return crc
 end
 
-admin_lib.make_signature = function(path: string): string
+local signatures = {
+    Version = "1.0.0"
+}
+
+signatures.make_signature = function(path: string): string
     local file_name = string.split(path, "/")
     file_name = file_name[#file_name]
 
@@ -134,5 +138,19 @@ admin_lib.make_signature = function(path: string): string
 --SignatureDate: %s
 --Signature: %s
 
+
+
 return "%s"]], file_name, os.date(), hash, hash))
 end
+
+signatures.check_signatures = function(tabl, str: string)
+    local hash = hash(str)
+
+    if table.find(tabl, hash) then
+        return true
+    else
+        return false
+    end
+end
+
+return signatures
