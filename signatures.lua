@@ -142,11 +142,9 @@ return "%s"]], file_name, os.date(), hash, hash))
 end
 
 signatures.validate = function(tabl, str: string)
-    local hash = hash(str)
+    local _hash = hash(str)
 
-	print(table.unpack(tabl))
-	
-    if table.find(tabl, hash) then
+    if table.find(tabl, _hash) then
         return true
     else
         return false
