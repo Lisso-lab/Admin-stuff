@@ -138,8 +138,6 @@ signatures.make_signature = function(path: string): string
 --SignatureDate: %s
 --Signature: %s
 
-
-
 return "%s"]], file_name, os.date(), hash, hash))
 end
 
