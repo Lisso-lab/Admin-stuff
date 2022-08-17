@@ -146,7 +146,7 @@ signatures.validate = function(tabl, str: string)
 
 	print(type(_hash))
 	
-    if table.find(tabl, tostring(_hash)) then
+    if table.find(tabl, _hash) then
 		print("true")
         return true
     else
