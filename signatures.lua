@@ -144,7 +144,7 @@ end
 signatures.validate = function(tabl, str: string)
     local _hash = hash(str)
 
-	print(tabl,table.unpack(tabl))
+	print(table.unpack(tabl))
 	
     if table.find(tabl, _hash) then
         return true
