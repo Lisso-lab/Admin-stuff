@@ -2,19 +2,7 @@
 local tween_service: TweenService = game:GetService("TweenService")
 
 local function clean_string(str: string): string
-	local tabl = {}
-
-	for i=1,#str do
-		tabl[#tabl+1] = string.sub(str,i,i)
-	end
-
-	for i=1,#tabl do
-		if tabl[i] == " " and tabl[i-1] == " " then
-			tabl[i-1] = ""
-		end
-	end
-
-	return table.concat(tabl)
+	return string.gsub(str, "%s+", " ")
 end
 
 local function do_options(tabl: table?, options: table): table
