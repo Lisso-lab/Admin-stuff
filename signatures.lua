@@ -141,7 +141,7 @@ signatures.make_signature = function(path: string): string
 return "%s"]], file_name, os.date(), hash, hash))
 end
 
-signatures.check_signatures = function(tabl, str: string)
+signatures.validate = function(tabl, str: string)
     local hash = hash(str)
 
     if table.find(tabl, hash) then
