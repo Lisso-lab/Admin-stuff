@@ -140,18 +140,14 @@ signatures.make_signature = function(path: string): string
 
 return "%s"]], file_name, os.date(), hash, hash))
 end
-
 signatures.validate = function(tabl, str: string)
     local _hash = hash(str)
 
-	print(type(_hash))
-	
-    if table.find(tabl, _hash) then
-		print("true")
-        return true
-    else
-        return false
-    end
+	for i=1,#tabl do
+		if tabl[i] == _hash then return true end
+	end
+
+	return false
 end
 
 return signatures
