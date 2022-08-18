@@ -1,10 +1,6 @@
 --!strict
 local tween_service: TweenService = game:GetService("TweenService")
 
-local function clean_string(str: string): string
-	return string.gsub(str, "%s+", " ")
-end
-
 local function do_options(tabl: table?, options: table): table
 	if type(tabl) ~= "table" then
 		tabl = options
@@ -23,35 +19,37 @@ local admin_lib = {
     commands = {}
 }
 
-admin_lib.tween = function(inst: Instance,tween_info: TweenInfo,props)
-    local tween_info: TweenInfo = tween_info or TweenInfo.new(
-        .1,
-        Enum.EasingStyle.Linear,
-        Enum.EasingDirection.In,
-        0,
-        false,
-        0
-    )
-
-    tween_service:Create(inst,tween_info,props):Play()
-end
-
 admin_lib._round = function(num: number, numeros: number): number
     return math.round(num * numeros) / numeros
 end
 
-admin_lib.process_string = function(str: string)
+admin_lib.init_cmd = function(tabl)
+	local name = tabl[1]
+
+    local command = admin_lib.get_command(name)
+
+    print(command)
+
+	if not command then return end
+
+	table.remove(tabl, 1)
+
+	command(table.unpack(tabl))
+end
+
+admin_lib.process_input = function(str: string)
     local prefix = admin_lib.prefix
 
     if not string.sub(str, 1, #prefix) == prefix then return end
 
-    str = string.sub(str, #prefix)
-    str = clean_string(str)
+    str = string.sub(str, #prefix + 1)
+    str = string.gsub(str, '%s+', ' ')
 
-	str = string.split(str, " ")
+	admin_lib.init_cmd(string.split(str, " "))
 end
 
 admin_lib.add_command = function(names, desc: string, func)
+    print(names,desc,func)
 	admin_lib.commands[#admin_lib.commands+1] = {names, desc, func}
 end
 
@@ -61,10 +59,8 @@ admin_lib.get_command = function(str: string)
 	for i=1,#commands do
 		if not table.find(commands[i][1], str) then continue end
 
-		return commands[i]
+		return commands[i][3]
 	end
 end
-
-
 
 return admin_lib
