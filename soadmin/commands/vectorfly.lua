@@ -1,19 +1,19 @@
 --!strict
-local user_input_service: UserInputService = game:GetService("UserInputService")
-local run_service: RunService = game:GetService("RunService")
-
-local cam: Camera = workspace.CurrentCamera
-
-local keys_using = {
-    ["W"] = false,
-    ["A"] = false,
-    ["S"] = false,
-    ["D"] = false,
-    ["Q"] = false,
-    ["E"] = false
-}
-
 return {"vfly","vectorfly"},"Flying with use of vectors", function(speed)
+    local user_input_service: UserInputService = game:GetService("UserInputService")
+    local run_service: RunService = game:GetService("RunService")
+
+    local cam: Camera = workspace.CurrentCamera
+
+    local keys_using = {
+        ["W"] = false,
+        ["A"] = false,
+        ["S"] = false,
+        ["D"] = false,
+        ["Q"] = false,
+        ["E"] = false
+    }
+
     if cmd_props.vectorfly and not cmd_props.vectorfly[1].Connected then
         cmd_props.vectorfly.part:Destroy()
 
