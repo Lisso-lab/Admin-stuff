@@ -15,7 +15,7 @@ end
 
 local admin_lib = {
     version = "0.0.5",
-    prefix = ";",
+    prefix = "/e ",
     commands = {}
 }
 
