@@ -28,8 +28,6 @@ admin_lib.init_cmd = function(tabl)
 
     local command = admin_lib.get_command(name)
 
-    print(command)
-
 	if not command then return end
 
 	table.remove(tabl, 1)
@@ -49,7 +47,6 @@ admin_lib.process_input = function(str: string)
 end
 
 admin_lib.add_command = function(names, desc: string, func)
-    print(names,desc,func)
 	admin_lib.commands[#admin_lib.commands+1] = {names, desc, func}
 end
 
