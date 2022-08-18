@@ -15,13 +15,19 @@ local keys_using = {
 
 return {"vfly","vectorfly"},"Flying with use of vectors", function(speed)
     if cmd_props.vectorfly and not cmd_props.vectorfly[1].Connected then
+        cmd_props.vectorfly.part:Destroy()
+
         cmd_props.vectorfly = nil
     end
 
     if cmd_props.vectorfly then
+        cmd_props.vectorfly.part:Destroy()
+
         for i=1,#cmd_props.vectorfly do
             cmd_props.vectorfly[i]:Disconnect()
         end
+
+        cmd_props.vectorfly.part:Destroy()
 
         notify("Disabled vector fly")
     else
@@ -47,21 +53,15 @@ return {"vfly","vectorfly"},"Flying with use of vectors", function(speed)
             end
         end
 
-        local part do
-            local char = get_char()
-
-            local hum = char:FindFirstChildWhichIsA("Humanoid")
-
-            part = Instance.new("Part")
-
-            part.Anchored = true
-            part.Position = char.PrimaryPart.Position
-        end
-
         local function main()
-            local speed = cmd_props.vectorfly.speed
-            local x_vec,look_vec,y_vec = cam.CFrame.XVector*speed,cam.CFrame.LookVector*speed,cam.CFrame.YVector/2
-            local char = get_char()
+            local speed: number = cmd_props.vectorfly.speed
+
+            local x_vec: Vector3   = cam.CFrame.XVector*speed
+            local look_vec: Vector3= cam.CFrame.LookVector*speed
+            local y_vec: Vector3   = cam.CFrame.YVector/2
+
+            local part: BasePart = cmd_props.vectorfly.part
+            local char: Model = get_char()
 
             if not char then return end
 
@@ -87,15 +87,21 @@ return {"vfly","vectorfly"},"Flying with use of vectors", function(speed)
             char:MoveTo(part.Position)
         end
 
-        print(speed)
+        cmd_props.vectorfly = {}
+
+        cmd_props.vectorfly.part = Instance.new("Part")
+
+        cmd_props.vectorfly.part.Anchored = true
+
+        do local char = get_char()
+            cmd_props.vectorfly.part.Position = char.PrimaryPart.Position
+        end
     
         if tonumber(speed) then
             cmd_props.vectorfly.speed = tonumber(speed)
         else
             cmd_props.vectorfly.speed = 1
         end
-
-        cmd_props.vectorfly = {}
 
         local connections = {
             run_service["Heartbeat"]:Connect(main),
