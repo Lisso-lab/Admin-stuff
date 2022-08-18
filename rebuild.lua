@@ -1,7 +1,7 @@
 local commands = {
     "noclip.lua",
     "antifling.lua",
-    "vectorfly.lua"
+    "vectorfly.lua",
     "vectorflyspeed.lua"
 }
 
