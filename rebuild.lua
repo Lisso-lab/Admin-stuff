@@ -2,7 +2,8 @@ local commands = {
     "noclip.lua",
     "antifling.lua",
     "vectorfly.lua",
-    "vectorflyspeed.lua"
+    "vectorflyspeed.lua",
+    "teleport.lua"
 }
 
 local url = "https://raw.githubusercontent.com/Lisso-lab/Admin-stuff/main/"
