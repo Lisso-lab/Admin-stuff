@@ -41,17 +41,29 @@ admin_lib.tween = function(inst: Instance, tween_info: TweenInfo, props)
 end
 
 admin_lib.find_plr = function(str: string): Player --| nil
-	str = string.lower(str)
-
     for _,v in pairs(plrs:GetChildren()) do
-        if string.sub(v.Name, 1, #str) == str or 
-           string.sub(v.DisplayName, 1, #str) == str then
+        if string.lower(string.sub(v.Name, 1, #str)) == str or 
+           string.lower(string.sub(v.DisplayName, 1, #str)) == str then
 
             return v
         end
     end
 
 	return false
+end
+
+admin_lib.p_find_plrs = function(str: string)
+	str = string.lower(str)
+
+	local _plrs = plrs:GetChildren()
+
+	if str == "all" then 
+		return _plrs
+	elseif str == "random" then
+		return _plrs[math.random(1,#_plrs)]
+	else
+		return admin_lib.find_plr(str)
+	end
 end
 
 admin_lib.init_cmd = function(tabl)
