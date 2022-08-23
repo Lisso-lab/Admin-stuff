@@ -1,4 +1,5 @@
 --!strict
+local plrs: Players = game:GetService("Players")
 local tween_service: TweenService = game:GetService("TweenService")
 
 local function do_options(tabl: table?, options: table): table
@@ -23,8 +24,38 @@ admin_lib._round = function(num: number, numeros: number): number
     return math.round(num * numeros) / numeros
 end
 
+admin_lib.tween = function(inst: Instance, tween_info: TweenInfo, props)
+    local tween_info: TweenInfo = tween_info or TweenInfo.new(
+        .1,
+        Enum.EasingStyle.Linear,
+        Enum.EasingDirection.In,
+        0,
+        false,
+        0
+    )
+
+    local tween: Tween = tween_service:Create(inst,tween_info,props)
+    coroutine.wrap(function() tween:Play() end)()
+
+	return tween
+end
+
+admin_lib.find_plr = function(str: string): Player --| nil
+	str = string.lower(str)
+
+    for _,v in pairs(plrs:GetChildren()) do
+        if string.sub(v.Name, 1, #str) == str or 
+           string.sub(v.DisplayName, 1, #str) == str then
+
+            return v
+        end
+    end
+
+	return false
+end
+
 admin_lib.init_cmd = function(tabl)
-	local name = tabl[1]
+	local name: string = tabl[1]
 
     local command = admin_lib.get_command(name)
 
